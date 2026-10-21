@@ -1,0 +1,22 @@
+--- a/src/cups/rastertogutenprint.c
++++ b/src/cups/rastertogutenprint.c
+@@ -1584,6 +1584,19 @@
+   margin = cups->header.cupsBytesPerLine - left_margin - bytes_per_line -
+     right_margin;
+ 
++  /* Toss the rows above the printer's top margin, as is done for the left */
++  if (cups->row == 0 && cups->top_trim > 0)
++    {
++      int skip = cups->top_trim;
++      if (skip > cups->header.cupsHeight)
++	skip = cups->header.cupsHeight;
++      if (! suppress_messages)
++	fprintf(stderr, "DEBUG: Gutenprint: Tossing top %d rows\n", skip);
++      throwaway_data(skip * cups->header.cupsBytesPerLine, cups);
++      cups->row = skip;
++    }
++  row += cups->top_trim;
++
+   if (cups->row < cups->header.cupsHeight)
+   {
+     if (! suppress_messages && ! suppress_verbose_messages)

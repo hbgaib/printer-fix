@@ -1,0 +1,44 @@
+%!PS-Adobe-3.0
+%%Title: Uji ukur margin A4
+%%BoundingBox: 0 0 595 842
+% Sumber test-ukur-A4.pdf. Buat ulang:
+%   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=test-ukur-A4.pdf test-ukur.ps
+<< /PageSize [595.2756 841.8898] >> setpagedevice
+/cm {28.346457 mul} def  /mm {2.8346457 mul} def
+/W 21 cm def /H 29.7 cm def
+/Helvetica findfont 8 scalefont setfont
+0 setgray 0.4 setlinewidth
+% y dihitung dari ATAS kertas
+/T { H exch sub } def
+/hline { /y exch def y T 0 exch moveto W 0 rlineto stroke } def
+/vline { /x exch def x 0 moveto 0 H rlineto stroke } def
+% garis penuh: 4, 10, 15, 20, 25 cm dari atas; 3 cm dari bawah (= 26.7 dari atas)
+[4 10 15 20 25 26.7] { /c exch def c cm hline
+  6 cm c cm T 1.5 mm add moveto (garis ini ) show
+  c 26.7 eq {(3 cm dari BAWAH)} {c 10 string cvs show ( cm dari ATAS)} ifelse show } forall
+% garis tegak: 4 cm dari kiri, 3 cm dari kanan (= 18 dari kiri)
+4 cm vline 18 cm vline
+4 cm 1.5 mm add 12 cm T moveto (4 cm dari KIRI) show
+18 cm 1.5 mm add 12 cm T moveto (3 cm dari KANAN) show
+% penggaris kiri: tick tiap mm diukur dari tepi atas, label tiap cm (mulai 2 cm agar tidak tabrakan)
+0.25 setlinewidth
+/tick { 10 mod 0 eq {12 mm} {m 5 mod 0 eq {8 mm} {5 mm} ifelse} ifelse } def
+20 1 297 { /m exch def
+  m mm T /y exch def  m tick /len exch def
+  6 mm y moveto len 0 rlineto stroke
+  m 10 mod 0 eq { 6 mm len add 1 mm add y 1 mm sub moveto m 10 idiv 3 string cvs show } if
+} for
+% penggaris atas: tick tiap mm diukur dari tepi kiri
+20 1 210 { /m exch def
+  m mm /x exch def  m tick /len exch def
+  x 6 mm T moveto 0 len neg rlineto stroke
+  m 10 mod 0 eq { x 1 mm add 6 mm len add 3 mm add T moveto m 10 idiv 3 string cvs show } if
+} for
+/Helvetica-Bold findfont 11 scalefont setfont
+5 cm 7 cm T moveto (UJI UKUR A4 - Canon iP2700) show
+/Helvetica findfont 9 scalefont setfont
+5 cm 7.6 cm T moveto (Penggaris kiri dan atas diukur dari tepi kertas, angka = cm, mulai dari 2 cm.) show
+5 cm 8.1 cm T moveto (Cetak dengan skala 100% / Actual size, JANGAN fit to page.) show
+5 cm 8.6 cm T moveto (Ukur jarak tepi kertas ke tiap garis pakai penggaris sungguhan.) show
+showpage
+%%EOF
